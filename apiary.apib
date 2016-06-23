@@ -53,7 +53,7 @@ Once you have a token you can use it in all API calls as shown below.
           "error_description": "Full authentication is required to access this resource"
         }
 
-## Whitelist tickets collection [/venueaccess-api/v1.0/whitelist/tickets{?id,code,start_date,end_date,event_id,performance_id,page,page_size,status}]
+## Whitelist tickets collection [/venueaccess-api/v1.0/whitelist/tickets{?id,start_date,end_date,event_id,performance_id,page,page_size,status}]
 List all the key data from the tickets filtered by the given parameters.
 
 See below the description of the response fields we consider that need to be explained:
@@ -64,8 +64,68 @@ See below the description of the response fields we consider that need to be exp
 | href                             | (Text) Url of the API doc               |
 | trace_id                         | (Text) unique identifier of the request |
 | parameters                       | (Object) Request filtering used         |
+| id                               | (Text) Contains the text codified into the bar_code or qr code |
 
-### List whitelist tickets [GET]
+### Whitelist create ticket [POST]
+
++ Request
+
+      + Headers
+
+            Authorization: Bearer [OAUTH2_TOKEN]
+            Accept: application/json
+
+      + Body
+
+            {
+                "id": "",
+                "status": "",
+                "creation_date": "2015-08-05T08:40:51Z",
+                "update_date": "2015-08-05T08:40:51Z",
+                "created_by": "info@mail.com",
+                "update_by": "2015-08-05T08:40:51Z",
+                "order_id": "FDSF34R234JKDS",
+                "to_be_sent": "2015-08-05T08:40:51Z",
+                "type": "BAR_CODE",
+                "event_id": 44,
+                "performance_id": 1,
+                "amount": 432.43,
+                "venue_id": 23
+            }
+
++ Response 201 (application/json)
+
+        {
+                "id": "fjskfjkadjfk34532423kj5",
+                "status": "AVAILABLE",
+                "creation_date": "2015-08-05T08:40:51Z",
+                "update_date": "2015-08-05T08:40:51Z",
+                "created_by": "info@mail.com",
+                "update_by": "2015-08-05T08:40:51Z",
+                "order_id": "FDSF34R234JKDS",
+                "to_be_sent": "2015-08-05T08:40:51Z",
+                "type": "BAR_CODE",
+                "event_id": 44,
+                "performance_id": 1,
+                "amount": 432.43,
+                "venue_id": 23
+         }
+
++ Response 400 (application/json)
+
+        {
+          "error": "Bad request",
+          "error_description": "There was a syntax error, check your params request and try it again."
+        }
+
++ Response 401 (application/json)
+
+        {
+          "error": "unauthorized",
+          "error_description": "Full authentication is required to access this resource"
+        }
+
+### Whitelist retrieve tickets [GET]
 
 + Request
 
@@ -75,8 +135,7 @@ See below the description of the response fields we consider that need to be exp
             Accept: application/json
 
 + Parameters
-    + id (optional, number) ... Filter by id
-    + code (optional, text) ... Filter by the ticket reference code.
+    + id (optional, number) ... Filter by the ticket reference code.
     + start_date (optional, date) ... Filter by starting date (`2015-08-05T08:40:51Z`)
     + end_date (optional, date) ... Filter by final date (`2015-08-05T08:40:51Z`)
     + event_id (optional, text) ... Filter by a given event.
@@ -106,7 +165,6 @@ See below the description of the response fields we consider that need to be exp
             "parameters":
             {
               "id": "",
-              "code": "",
               "start_date": "",
               "end_date": "",
               "event_id": "",
@@ -118,8 +176,7 @@ See below the description of the response fields we consider that need to be exp
 
             "tickets": [
               {
-                "id": 1,
-                "code": "fjskfjkadjfk34532423kj4",
+                "id": "fjskfjkadjfk34532423kj4",
                 "status": "RESERVED",
                 "creation_date": "2015-08-05T08:40:51Z",
                 "update_date": "2015-08-05T08:40:51Z",
@@ -134,8 +191,7 @@ See below the description of the response fields we consider that need to be exp
                 "venue_id": 23
               },
               {
-                "id": 2,
-                "code": "fjskfjkadjfk34532423kj5",
+                "id": "fjskfjkadjfk34532423kj5",
                 "status": "CONFIRMED",
                 "creation_date": "2015-08-05T08:40:51Z",
                 "update_date": "2015-08-05T08:40:51Z",
@@ -169,6 +225,98 @@ See below the description of the response fields we consider that need to be exp
             ]
 
           }
+
++ Response 204 (application/json)
+
++ Response 400 (application/json)
+
+        {
+          "error": "Bad request",
+          "error_description": "There was a syntax error, check your params request and try it again."
+        }
+
++ Response 401 (application/json)
+
+        {
+          "error": "unauthorized",
+          "error_description": "Full authentication is required to access this resource"
+        }
+
+### Whitelist ticket modification [PUT]
+
++ Parameters
+
+    + id (required, string) ... Update a given price id
+
++ Request
+
+      + Headers
+
+            Authorization: Bearer [OAUTH2_TOKEN]
+            Accept: application/json
+
+      + Body
+
+            {
+                "id": "fjskfjkadjfk34532423kj5",
+                "status": "CANCELLED",
+                "creation_date": "2015-08-05T08:40:51Z",
+                "update_date": "2015-08-05T08:40:51Z",
+                "created_by": "info@mail.com",
+                "update_by": "2015-08-05T08:40:51Z",
+                "order_id": "FDSF34R234JKDS",
+                "to_be_sent": "2015-08-05T08:40:51Z",
+                "type": "BAR_CODE",
+                "event_id": 44,
+                "performance_id": 1,
+                "amount": 432.43,
+                "venue_id": 23
+            }
+
++ Response 200 (application/json)
+
+        {
+                "id": "fjskfjkadjfk34532423kj5",
+                "status": "CANCELLED",
+                "creation_date": "2015-08-05T08:40:51Z",
+                "update_date": "2015-08-05T08:40:51Z",
+                "created_by": "info@mail.com",
+                "update_by": "2015-08-05T08:40:51Z",
+                "order_id": "FDSF34R234JKDS",
+                "to_be_sent": "2015-08-05T08:40:51Z",
+                "type": "BAR_CODE",
+                "event_id": 44,
+                "performance_id": 1,
+                "amount": 432.43,
+                "venue_id": 23
+         }
+
++ Response 400 (application/json)
+
+        {
+          "error": "Bad request",
+          "error_description": "There was a syntax error, check your params request and try it again."
+        }
+
++ Response 401 (application/json)
+
+        {
+          "error": "unauthorized",
+          "error_description": "Full authentication is required to access this resource"
+        }
+
+### Whitelist ticket cancellation [DELETE]
+
++ Parameters
+
+    + id (required, string) ... Update a given price id
+
++ Request
+
+      + Headers
+
+            Authorization: Bearer [OAUTH2_TOKEN]
+            Accept: application/json
 
 + Response 204 (application/json)
 
