@@ -68,6 +68,8 @@ See below the description of the response fields we consider that need to be exp
 
 ### Whitelist create ticket [POST]
 
+The ticket json body must have all the data concerned to be able to create a new ticket barcode or qr matrix code.
+
 + Request
 
       + Headers
@@ -126,6 +128,8 @@ See below the description of the response fields we consider that need to be exp
         }
 
 ### Whitelist retrieve tickets [GET]
+
+List all tickets from the whitelist filtered by the given parameters.
 
 + Request
 
@@ -244,6 +248,8 @@ See below the description of the response fields we consider that need to be exp
 
 ### Whitelist ticket modification [PUT]
 
+Basically this changes the status from a given ticket identified by its code.
+
 + Parameters
 
     + id (required, string) ... Update a given price id
@@ -306,6 +312,8 @@ See below the description of the response fields we consider that need to be exp
         }
 
 ### Whitelist ticket cancellation [DELETE]
+
+Remove a ticket from a whitelist.
 
 + Parameters
 
